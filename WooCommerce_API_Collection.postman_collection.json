@@ -1,0 +1,978 @@
+{
+	"info": {
+		"_postman_id": "woocommerce-api-collection",
+		"name": "WooCommerce REST API v3",
+		"description": "Complete collection for WooCommerce REST API v3 endpoints including product management, categories, orders, and more.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "woocommerce-api"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?per_page=100&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "100",
+									"description": "Number of products per page (max 100)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Retrieve all products with pagination support"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{product_id}}"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Retrieve a specific product by its ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Find Product by SKU",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?sku={{product_sku}}&per_page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "sku",
+									"value": "{{product_sku}}",
+									"description": "Product SKU to search for"
+								},
+								{
+									"key": "per_page",
+									"value": "1",
+									"description": "Limit to 1 result since SKU should be unique"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Find a product by its SKU (Stock Keeping Unit)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sample Product\",\n  \"sku\": \"SAMPLE-001\",\n  \"type\": \"simple\",\n  \"regular_price\": \"29.99\",\n  \"description\": \"This is a sample product description.\",\n  \"short_description\": \"Sample product short description.\",\n  \"categories\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"images\": [\n    {\n      \"src\": \"https://example.com/image.jpg\"\n    }\n  ],\n  \"manage_stock\": true,\n  \"stock_quantity\": 100,\n  \"in_stock\": true,\n  \"weight\": \"0.5\",\n  \"dimensions\": {\n    \"length\": \"10\",\n    \"width\": \"5\",\n    \"height\": \"2\"\n  },\n  \"status\": \"publish\",\n  \"featured\": false,\n  \"virtual\": false,\n  \"downloadable\": false,\n  \"tax_status\": \"taxable\",\n  \"tax_class\": \"\",\n  \"reviews_allowed\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Create a new product"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Product Name\",\n  \"sku\": \"SAMPLE-001\",\n  \"regular_price\": \"39.99\",\n  \"sale_price\": \"29.99\",\n  \"description\": \"Updated product description.\",\n  \"stock_quantity\": 50,\n  \"manage_stock\": true,\n  \"in_stock\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{product_id}}"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Update an existing product by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}?force=false",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{product_id}}"
+							],
+							"query": [
+								{
+									"key": "force",
+									"value": "false",
+									"description": "Force delete (true) or move to trash (false)"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Delete a product (move to trash by default, or force delete)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products by Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?category={{category_id}}&per_page=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "{{category_id}}",
+									"description": "Category ID to filter products"
+								},
+								{
+									"key": "per_page",
+									"value": "100",
+									"description": "Number of products per page"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get all products in a specific category"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?search={{search_term}}&per_page=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{search_term}}",
+									"description": "Search term to find products"
+								},
+								{
+									"key": "per_page",
+									"value": "100",
+									"description": "Number of products per page"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Search products by name, description, or SKU"
+					},
+					"response": []
+				}
+			],
+			"description": "Product management endpoints"
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/categories?per_page=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "100",
+									"description": "Number of categories per page"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get all product categories"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/categories/{{category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"categories",
+								"{{category_id}}"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get a specific category by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"New Category\",\n  \"slug\": \"new-category\",\n  \"description\": \"Description for the new category\",\n  \"parent\": 0\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"categories"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Create a new product category"
+					},
+					"response": []
+				}
+			],
+			"description": "Category management endpoints"
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/orders?per_page=100&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "100",
+									"description": "Number of orders per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get all orders with pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/orders/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get a specific order by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment_method\": \"bacs\",\n  \"payment_method_title\": \"Direct Bank Transfer\",\n  \"set_paid\": false,\n  \"billing\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"address_1\": \"969 Market\",\n    \"address_2\": \"\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"postcode\": \"94103\",\n    \"country\": \"US\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"(555) 555-5555\"\n  },\n  \"shipping\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"address_1\": \"969 Market\",\n    \"address_2\": \"\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"postcode\": \"94103\",\n    \"country\": \"US\"\n  },\n  \"line_items\": [\n    {\n      \"product_id\": 1,\n      \"quantity\": 2\n    }\n  ],\n  \"shipping_lines\": [\n    {\n      \"method_id\": \"flat_rate\",\n      \"method_title\": \"Flat Rate\",\n      \"total\": \"10.00\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Create a new order"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"processing\",\n  \"set_paid\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Update an existing order"
+					},
+					"response": []
+				}
+			],
+			"description": "Order management endpoints"
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers?per_page=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "100",
+									"description": "Number of customers per page"
+								}
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get all customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"{{customer_id}}"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get a specific customer by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"username\": \"johndoe\",\n  \"billing\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"company\": \"\",\n    \"address_1\": \"969 Market\",\n    \"address_2\": \"\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"postcode\": \"94103\",\n    \"country\": \"US\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"(555) 555-5555\"\n  },\n  \"shipping\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"company\": \"\",\n    \"address_1\": \"969 Market\",\n    \"address_2\": \"\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"postcode\": \"94103\",\n    \"country\": \"US\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Create a new customer"
+					},
+					"response": []
+				}
+			],
+			"description": "Customer management endpoints"
+		},
+		{
+			"name": "System Status",
+			"item": [
+				{
+					"name": "Get System Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/system_status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"system_status"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get WooCommerce system status information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get System Tools",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/system_status/tools",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"system_status",
+								"tools"
+							]
+						},
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{consumer_key}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{consumer_secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Get available system tools"
+					},
+					"response": []
+				}
+			],
+			"description": "System status and tools endpoints"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Pre-request script to validate environment variables",
+					"if (!pm.environment.get('base_url') || !pm.environment.get('consumer_key') || !pm.environment.get('consumer_secret')) {",
+					"    console.warn('Please set up your environment variables: base_url, consumer_key, consumer_secret');",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://your-site.com/wp-json/wc/v3",
+			"type": "string"
+		},
+		{
+			"key": "consumer_key",
+			"value": "your_consumer_key_here",
+			"type": "string"
+		},
+		{
+			"key": "consumer_secret",
+			"value": "your_consumer_secret_here",
+			"type": "string"
+		},
+		{
+			"key": "product_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "product_sku",
+			"value": "SAMPLE-001",
+			"type": "string"
+		},
+		{
+			"key": "category_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "order_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "customer_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "search_term",
+			"value": "sample",
+			"type": "string"
+		}
+	]
+}
